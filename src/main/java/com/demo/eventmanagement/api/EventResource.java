@@ -30,6 +30,7 @@ public class EventResource {
 
   @POST
   @Path("/register")
+  @Produces("application/json")
   @Consumes("application/json")
   public Response addEvent(Event event) {
     EventService eventService = new EventService();

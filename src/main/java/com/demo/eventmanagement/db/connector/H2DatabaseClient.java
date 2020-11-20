@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DatabaseClient {
+public class H2DatabaseClient {
 
   //TODO close the connection
   public ResultSet executeSelect(String query) {
@@ -14,7 +14,7 @@ public class DatabaseClient {
 
     ResultSet resultSet = null;
     try {
-      Connection connection = ConnectionFactory.getConnection();
+      Connection connection = H2ConnectionFactory.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
 
       resultSet = preparedStatement.executeQuery();
@@ -31,16 +31,16 @@ public class DatabaseClient {
   public PreparedStatement getPreparedStatement(String query) {
     PreparedStatement preparedStatement = null;
     try {
-      Connection connection = ConnectionFactory.getConnection();
+      Connection connection = H2ConnectionFactory.getConnection();
       preparedStatement = connection.prepareStatement(query);
-      
+
     } catch (SQLException e) {
       System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
       e.printStackTrace();
     } catch (Exception e) {
       e.printStackTrace();
     }
-    
+
     return preparedStatement;
   }
 
@@ -49,7 +49,7 @@ public class DatabaseClient {
     int count = 0;
 
     try {
-      Connection connection = ConnectionFactory.getConnection();
+      Connection connection = MySqlConnectionFactory.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
 
       count = preparedStatement.executeUpdate();

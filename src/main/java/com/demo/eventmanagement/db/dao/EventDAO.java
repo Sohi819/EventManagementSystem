@@ -1,6 +1,6 @@
 package com.demo.eventmanagement.db.dao;
 
-import com.demo.eventmanagement.db.connector.DatabaseClient;
+import com.demo.eventmanagement.db.connector.H2DatabaseClient;
 import com.demo.eventmanagement.db.dto.Event;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +11,7 @@ import java.util.List;
 public class EventDAO {
 
   public List<Event> getAllEvents() throws SQLException {
-    DatabaseClient databaseClient = new DatabaseClient();
+    H2DatabaseClient databaseClient = new H2DatabaseClient();
     String query = "Select * from EVENT";
     ResultSet resultSet = databaseClient.executeSelect(query);
 
@@ -33,7 +33,7 @@ public class EventDAO {
   }
 
   public Event addEvent(Event event) {
-    DatabaseClient databaseClient = new DatabaseClient();
+    H2DatabaseClient databaseClient = new H2DatabaseClient();
     try {
 
       PreparedStatement ps = databaseClient.getPreparedStatement("INSERT INTO event (event_name, speaker, start_date, end_date, venue) VALUES(?,?,?,?,?)");

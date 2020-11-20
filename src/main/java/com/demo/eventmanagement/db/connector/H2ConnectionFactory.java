@@ -4,16 +4,16 @@ package com.demo.eventmanagement.db.connector;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionFactory {
+public class H2ConnectionFactory {
   private static java.sql.Connection sqlConnection;
 
   public static java.sql.Connection getConnection() {
     //TODO pull from properties
-    String driver = "com.mysql.jdbc.Driver";
-    String dbName = "hackathon2020";
-    String dbURL = "jdbc:mysql://localhost:3306/" + dbName;
-    String username = "root";
-    String password = "root";
+    String driver = "org.h2.Driver";
+    String dbName = "test";
+    String dbURL = "jdbc:h2:~/" + dbName;
+    String username = "sa";
+    String password = "";
 
     if (sqlConnection != null) return sqlConnection;
 
