@@ -4,7 +4,6 @@ curl --location --request POST 'http://localhost:8081/api/events/register' \
     "eventId": 1,
     "eventName": "a",
     "speaker": "q",
-    "startDate": "w",
-    "endDate": "e",
+    "eventDate": "w",
     "venue": "v"
 }'

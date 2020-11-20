@@ -11,19 +11,17 @@ public class Event {
   private long eventId;
   private String eventName;
   private String speaker;
-  private String startDate;
-  private String endDate;
+  private String eventDate;
   private String venue;
 
   public Event() {
   }
 
-  public Event(long eventId, String eventName, String speaker, String startDate, String endDate, String venue) {
+  public Event(long eventId, String eventName, String speaker, String eventDate, String venue) {
     this.eventId = eventId;
     this.eventName = eventName;
     this.speaker = speaker;
-    this.startDate = startDate;
-    this.endDate = endDate;
+    this.eventDate = eventDate;
     this.venue = venue;
   }
 
@@ -35,20 +33,12 @@ public class Event {
     this.eventId = eventId;
   }
 
-  public String getStartDate() {
-    return startDate;
+  public String getEventDate() {
+    return eventDate;
   }
 
-  public void setStartDate(String startDate) {
-    this.startDate = startDate;
-  }
-
-  public String getEndDate() {
-    return endDate;
-  }
-
-  public void setEndDate(String endDate) {
-    this.endDate = endDate;
+  public void setEventDate(String eventDate) {
+    this.eventDate = eventDate;
   }
 
   public String getVenue() {
@@ -81,8 +71,7 @@ public class Event {
         "eventId=" + eventId +
         ", eventName='" + eventName + '\'' +
         ", speaker='" + speaker + '\'' +
-        ", startDate='" + startDate + '\'' +
-        ", endDate='" + endDate + '\'' +
+        ", eventDate='" + eventDate + '\'' +
         ", venue='" + venue + '\'' +
         '}';
   }

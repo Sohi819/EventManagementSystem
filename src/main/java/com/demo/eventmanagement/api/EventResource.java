@@ -1,9 +1,10 @@
 package com.demo.eventmanagement.api;
 
-import com.demo.eventmanagement.db.dao.EventDAO;
+import com.demo.eventmanagement.api.request.EventRequest;
 import com.demo.eventmanagement.db.dto.Event;
 import com.demo.eventmanagement.service.EventService;
 import java.util.List;
+import java.util.Map;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -20,9 +21,19 @@ public class EventResource {
 
   @GET
   @Produces("application/json")
-  public List<Event> getEvent() {
+  public List<Event> getEvents() {
     EventService eventService = new EventService();
-    List<Event> events = eventService.getEvents();
+    List<Event> events = eventService.getEventsByDate();
+    System.out.println(events);
+    return events;
+  }
+
+  @GET
+  @Path("/filter")
+  @Produces("application/json")
+  public Map<String, List<Event>> getEventsWithFilter(EventRequest eventRequest) {
+    EventService eventService = new EventService();
+    Map<String, List<Event>> events = eventService.getEventsByDate(eventRequest);
     System.out.println(events);
     return events;
   }
@@ -37,35 +48,60 @@ public class EventResource {
     boolean result = eventService.registerEvent(event);
 
     System.out.println(result);
-    
+
     if (result) {
       return Response.ok(event).build();
     } else {
-      return Response.serverError().build();
+      return Response.status(Response.Status.BAD_REQUEST).build();
+    }
+  }
+
+  @POST
+  @Path("/{event_id}/users/register")
+  @Produces("application/json")
+  @Consumes("application/json")
+  public Response registerUser(@PathParam("event_id") String eventId, String[] users) {
+    EventService eventService = new EventService();
+    Event event = eventService.registerUserForEvent(eventId, users);
+
+    System.out.println(event);
+
+    if (event == null) {
+      return Response.status(Response.Status.BAD_REQUEST).build();
+    } else {
+      return Response.ok(event).build();
     }
   }
 
   @PUT
-  @Path("/update/{id}")
+  @Path("/{event_id}")
   @Consumes("application/json")
-  public Response updateEvent(@PathParam("id") int id, Event emp) {
-    EventDAO dao = new EventDAO();
-//    int count = dao.updateEvent(id, emp);
-//    if (count == 0) {
-//      return Response.status(Response.Status.BAD_REQUEST).build();
-//    }
-    return Response.ok().build();
+  public Response updateEvent(@PathParam("event_id") long eventId, Event event) {
+
+    EventService eventService = new EventService();
+    int count = eventService.updateEvent(eventId, event);
+    System.out.println(count);
+
+    if (count == 0) {
+      return Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
+    return Response.ok(count).build();
   }
 
   @DELETE
-  @Path("/delete/{id}")
+  @Path("/{event_id}")
   @Consumes("application/json")
-  public Response deleteEvent(@PathParam("id") int id) {
-    EventDAO dao = new EventDAO();
-//    int count = dao.deleteEvent(id);
-//    if (count == 0) {
-//      return Response.status(Response.Status.BAD_REQUEST).build();
-//    }
-    return Response.ok().build();
+  public Response deleteEvent(@PathParam("event_id") long eventId) {
+
+    EventService eventService = new EventService();
+    int count = eventService.deleteEvent(eventId);
+    System.out.println(count);
+
+    if (count == 0) {
+      return Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
+    return Response.ok(count).build();
   }
 }
