@@ -21,23 +21,12 @@ public class EventResource {
 
   @GET
   @Produces("application/json")
-  public List<Event> getEvents() {
-    EventService eventService = new EventService();
-    List<Event> events = eventService.getEventsByDate();
-    System.out.println(events);
-    return events;
-  }
-
-  @GET
-  @Path("/filter")
-  @Produces("application/json")
-  public Map<String, List<Event>> getEventsWithFilter(EventRequest eventRequest) {
+  public Map<String, List<Event>> getEvents(EventRequest eventRequest) {
     EventService eventService = new EventService();
     Map<String, List<Event>> events = eventService.getEventsByDate(eventRequest);
     System.out.println(events);
     return events;
   }
-
 
   @POST
   @Path("/register")

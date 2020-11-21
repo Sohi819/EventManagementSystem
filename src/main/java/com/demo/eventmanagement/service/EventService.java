@@ -5,37 +5,38 @@ import com.demo.eventmanagement.db.dao.EventDAO;
 import com.demo.eventmanagement.db.dao.UserDAO;
 import com.demo.eventmanagement.db.dto.Event;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class EventService {
-
-  public List<Event> getEventsByDate() {
-    EventDAO eventDAO = new EventDAO();
-    List<Event> eventsList = null;
-    eventsList = eventDAO.getAllEvents();
-    System.out.println("eventsList >> ");
-    System.out.println(eventsList);
-    return eventsList;
-  }
 
   public Map<String, List<Event>> getEventsByDate(EventRequest eventRequest) {
     EventDAO eventDAO = new EventDAO();
     List<Event> eventsList = null;
-    eventsList = eventDAO.getAllEvents(eventRequest);
+    if (eventRequest == null) {
+      eventsList = eventDAO.getAllEvents();
+    } else {
+      eventsList = eventDAO.getAllEvents(eventRequest);
+    }
     System.out.println("eventsList >> ");
     System.out.println(eventsList);
 
     Map<String, List<Event>> eventsByDate = groupEventsByDate(eventsList);
-
     return eventsByDate;
   }
 
   private Map<String, List<Event>> groupEventsByDate(List<Event> eventsList) {
-    Map<String, List<Event>> eventsByDate = new HashMap<>();
+    Map<String, List<Event>> eventsByDate = new TreeMap<>();
     for (Event event : eventsList) {
       String dateKey = event.getEventDate().substring(0, 10);
+//      Date parseDate = null;
+//      try {
+//        parseDate = new SimpleDateFormat("yyyy-MM-dd").parse(dateTrim);
+//      } catch (ParseException e) {
+//        e.printStackTrace();
+//      }
+//      String dateKey = new SimpleDateFormat("dd-MM-yyyy").format(parseDate);
       System.out.println("dateKey : " + dateKey);
       if (eventsByDate.get(dateKey) == null) {
         List<Event> eventList = new ArrayList<>();

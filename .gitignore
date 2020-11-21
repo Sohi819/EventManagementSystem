@@ -2,3 +2,6 @@
 EventManagementSystem.iml
 out/
 target/
+.classpath
+.project
+EventManagementSystem.eml

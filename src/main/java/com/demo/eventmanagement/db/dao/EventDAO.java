@@ -82,7 +82,9 @@ public class EventDAO {
         String venue = resultSet.getString("venue");
 
         Event obj = new Event(eventId, eventName, speaker, eventDate, venue);
-        eventList.add(obj);
+
+        Event eventWithUsers = addUsers(obj);
+        eventList.add(eventWithUsers);
       }
       System.out.println("eventList: ");
       System.out.println(eventList);
@@ -91,6 +93,15 @@ public class EventDAO {
       return null;
     }
     return eventList;
+  }
+
+  private Event addUsers(Event obj) {
+    UserDAO userDAO = new UserDAO();
+    List<String> users = userDAO.getUsers(obj.getEventId());
+    for (String user : users) {
+      obj.addUser(user);
+    }
+    return obj;
   }
 
   public Event addEvent(Event event) {

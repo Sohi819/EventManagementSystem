@@ -1,5 +1,7 @@
 package com.demo.eventmanagement.db.dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -13,6 +15,7 @@ public class Event {
   private String speaker;
   private String eventDate;
   private String venue;
+  private List<String> users = new ArrayList<>();
 
   public Event() {
   }
@@ -65,6 +68,13 @@ public class Event {
     this.speaker = speaker;
   }
 
+  public void addUser(String user) {
+    if (this.users == null) {
+      this.users = new ArrayList<>();
+    }
+    this.users.add(user);
+  }
+
   @Override
   public String toString() {
     return "Event{" +
@@ -73,6 +83,7 @@ public class Event {
         ", speaker='" + speaker + '\'' +
         ", eventDate='" + eventDate + '\'' +
         ", venue='" + venue + '\'' +
+        ", users=" + users +
         '}';
   }
 }
